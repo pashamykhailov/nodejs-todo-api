@@ -4,6 +4,8 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db) => {
   if (err) {
     return console.log('Cannot connect to base ', err);
   }
+  console.warn();
+
   // db.collection('Todos').insertOne({
   //   text: 'new message',
   //   completed: false
@@ -14,7 +16,7 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db) => {
   //   console.log(JSON.stringify(result.ops, undefined, 2));
   // });
   //
-  // db.collection('Users').insertOne({
+  // db.coa sllection('Users').insertOne({
   //   name: 'Pavel',
   //   age: 23,
   //   location: 'Phuket'
@@ -24,11 +26,8 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', (err, db) => {
   //   }
   //   console.log(JSON.stringify(result.ops, undefined, 2))
   // });
-
-
-  
   db.collection('Users').find().toArray().then((users) => {
-    console.log(users);
+    console.lo(users);
   }, (error) => {
     console.log('some error ', error);
   });
