@@ -39,7 +39,7 @@ describe("POST /todos", () => {
     it("should not create todo with individual data", (done) => {
         supertest(app)
             .post("/todos")
-            .send()
+            .send({})
             .expect(400)
             .end((err, res) => {
                 if (err) {
