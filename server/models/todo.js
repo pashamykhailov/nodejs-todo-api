@@ -9,7 +9,7 @@ let schema = new mongoose.Schema({
         type:Boolean,
         default: false
     },
-    completeAt: {
+    completedAt: {
         type: Number,
         default: null
     }
