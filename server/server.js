@@ -1,4 +1,4 @@
-require('./config/config');
+require("./config/config");
 const _ = require("lodash");
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -7,6 +7,7 @@ const { ObjectId } = require("mongodb");
 const { mongoose } = require("./db/mongoose");
 const { User } = require("./models/user");
 const { Todo } = require("./models/todo");
+const { authenticate } = require("./middleware/authenticate");
 
 const port = process.env.PORT;
 let app = express();
@@ -105,16 +106,24 @@ app.patch("/todos/:id", (req, res) => {
     });
 });
 
-app.post('/users', (req, res) => {
-  let body = _.pick(req.body, ['email', 'password']);
+app.post("/users", (req, res) => {
+  let body = _.pick(req.body, ["email", "password"]);
   let user = new User(body);
-  user.save().then(() => {
-    return user.generateAuthToken(user);
-  }).then((token) => {
-    res.header('x-auth', token).send(user);
-  }).catch((err) => {
-    res.status(400).send('error '+ err);
-  });
+  user
+    .save()
+    .then(() => {
+      return user.generateAuthToken(user);
+    })
+    .then((token) => {
+      res.header("x-auth", token).send(user);
+    })
+    .catch((err) => {
+      res.status(400).send("error " + err);
+    });
+});
+
+app.get("/users/me", authenticate, (req, res) => {
+  res.send(req.user);
 });
 
 app.listen(port, () => {
